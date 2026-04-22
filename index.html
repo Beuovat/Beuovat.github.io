@@ -89,19 +89,6 @@ ul { list-style: none; }
   background: linear-gradient(90deg, transparent, var(--c-border), transparent);
   margin: 80px 0;
 }
-.tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  background: rgba(0,168,255,0.08);
-  border: 1px solid rgba(0,168,255,0.2);
-  border-radius: 20px;
-  font-family: var(--f-mono);
-  font-size: 11px;
-  color: var(--c-accent);
-  letter-spacing: 1px;
-}
 
 /* ─── SCAN LINES OVERLAY ─────────────────────────────────────────── */
 body::before {
@@ -230,35 +217,37 @@ body::before {
   background: var(--c-text2);
   transition: all 0.3s;
 }
+/* MOBİL MENÜ STİLLERİ */
 .mobile-menu {
   display: none;
-  position: fixed;
+  position: absolute;
   top: 72px; left: 0; right: 0;
-  background: rgba(4,8,16,0.97);
+  background: rgba(4,8,16,0.98);
   border-bottom: 1px solid var(--c-border);
   backdrop-filter: blur(16px);
-  padding: 20px 24px;
+  padding: 10px 24px 20px;
   flex-direction: column;
-  gap: 4px;
   z-index: 999;
 }
 .mobile-menu.open { display: flex; }
 .mobile-menu a {
   font-family: var(--f-mono);
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--c-text2);
-  padding: 14px 0;
+  padding: 16px 0;
   border-bottom: 1px solid var(--c-border2);
   transition: color 0.2s;
 }
+.mobile-menu a:last-child { border-bottom: none; }
 .mobile-menu a:hover { color: var(--c-accent); }
 
 /* ─── HERO ───────────────────────────────────────────────────────── */
 #hero {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh; /* Mobilde tarayıcı çubuğunu hesaba katar */
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -280,7 +269,6 @@ body::before {
   background-size: 60px 60px;
   mask-image: radial-gradient(ellipse at 50% 80%, black 0%, transparent 70%);
 }
-
 .hero-bg-logo-container {
   position: absolute;
   inset: 0;
@@ -297,7 +285,6 @@ body::before {
   opacity: 0.25; 
   filter: drop-shadow(0 0 30px rgba(0, 168, 255, 0.4)); 
 }
-
 .hero-scan {
   position: absolute;
   left: 0; right: 0;
@@ -345,7 +332,7 @@ body::before {
 }
 .hero-title {
   font-family: var(--f-display);
-  font-size: clamp(52px, 9vw, 112px);
+  font-size: clamp(40px, 9vw, 112px);
   font-weight: 900;
   line-height: 0.95;
   letter-spacing: -2px;
@@ -355,7 +342,7 @@ body::before {
 .hero-title .accent { color: var(--c-accent); }
 .hero-subtitle {
   font-family: var(--f-display);
-  font-size: clamp(14px, 2.5vw, 22px);
+  font-size: clamp(12px, 2.5vw, 22px);
   font-weight: 400;
   letter-spacing: 6px;
   color: var(--c-text2);
@@ -399,9 +386,7 @@ body::before {
   gap: 80px;
   align-items: center;
 }
-.about-visual {
-  position: relative;
-}
+.about-visual { position: relative; }
 .about-image {
   width: 100%;
   aspect-ratio: 4/3;
@@ -505,10 +490,7 @@ body::before {
   cursor: pointer;
   background: var(--c-panel);
 }
-.gallery-item-bg {
-  width: 100%;
-  height: 100%;
-}
+.gallery-item-bg { width: 100%; height: 100%; }
 .gallery-item-bg img {
   width: 100%;
   height: 100%;
@@ -610,6 +592,7 @@ body::before {
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--c-text2);
+  line-height: 1.4;
 }
 .special-achievement {
   grid-column: 1 / -1;
@@ -739,7 +722,7 @@ body::before {
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: flex-start;
-  margin-bottom: 40px; /* Footer dışarı çıktığı için boşluğu azalttık */
+  margin-bottom: 40px; 
 }
 .contact-form { display: flex; flex-direction: column; gap: 16px; }
 .form-input, .form-textarea {
@@ -818,7 +801,7 @@ body::before {
 footer { 
   border-top: 1px solid var(--c-border); 
   padding: 40px 0; 
-  background: var(--c-bg); /* Tam genişlikte karanlık arka plan */
+  background: var(--c-bg); 
   width: 100%;
 }
 .footer-inner {
@@ -837,6 +820,7 @@ footer {
 .footer-links {
   display: flex;
   gap: 24px;
+  flex-wrap: wrap;
 }
 .footer-links a {
   font-family: var(--f-mono);
@@ -926,7 +910,7 @@ footer {
   transition: width 0.1s;
 }
 
-/* ─── RESPONSIVE ─────────────────────────────────────────────────── */
+/* ─── RESPONSIVE (MOBİL DÜZELTMELER) ──────────────────────────────── */
 @media (max-width: 1024px) {
   .about-grid { grid-template-columns: 1fr; gap: 48px; }
   .achievement-grid { grid-template-columns: 1fr; }
@@ -937,15 +921,33 @@ footer {
 @media (max-width: 768px) {
   .nav-links, .nav-cta { display: none; }
   .nav-hamburger { display: flex; }
-  .gallery-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+  
+  /* Telefondaki devasa boşlukları küçülttük */
+  #about, #gallery, #achievements, #team, #sponsors, #contact { padding: 60px 0; }
+  .hero-content { padding: 100px 0 40px; }
+
+  /* Galeri resimlerinin telefonda daralıp kaybolmasını önlemek için */
+  .gallery-grid { grid-template-columns: 1fr; grid-template-rows: auto; gap: 16px; }
+  .gallery-item { aspect-ratio: 4/3; height: auto; border-radius: var(--r-md); }
+
+  /* Başarı kartlarındaki ikonları ve yazıları alt alta ortaladık */
+  .achievement-card { flex-direction: column; text-align: center; padding: 24px; gap: 16px; }
+  .special-achievement { grid-column: 1 / -1; }
+
   .team-grid { grid-template-columns: 1fr 1fr; }
   .contact-inner { padding: 32px; }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
+  
+  /* Footer menüsünü telefonda daha düzgün sardırdık */
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .footer-links { gap: 16px; }
 }
 @media (max-width: 480px) {
   .about-features { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
   .sponsor-grid { grid-template-columns: 1fr; }
+  
+  /* İletişim kısmındaki ikon ve yazıları alt alta daha okunaklı yaptık */
+  .contact-info-item { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
 </style>
 </head>
@@ -969,10 +971,20 @@ footer {
         <li><a href="#contact">İletişim</a></li>
       </ul>
       <a href="#contact" class="nav-cta">Bize Ulaşın →</a>
+      
       <div class="nav-hamburger" onclick="toggleMenu()" aria-label="Menü">
         <span></span><span></span><span></span>
       </div>
     </nav>
+  </div>
+  
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" onclick="toggleMenu()">Hakkımızda</a>
+    <a href="#gallery" onclick="toggleMenu()">Galeri</a>
+    <a href="#achievements" onclick="toggleMenu()">Başarılarımız</a>
+    <a href="#team" onclick="toggleMenu()">Takım</a>
+    <a href="#sponsors" onclick="toggleMenu()">Sponsorlar</a>
+    <a href="#contact" onclick="toggleMenu()">İletişim</a>
   </div>
 </header>
 
@@ -1193,7 +1205,7 @@ footer {
         <div class="sponsor-name">İzeltaş</div>
       </div>
       <div class="sponsor-card">
-        <div class="sponsor-img-wrapper"><img src="avci.png" alt="Avcı Ar-Ge ve Teknoloji"></div>
+        <div class="sponsor-img-wrapper"><img src="avci.jpeg" alt="Avcı Ar-Ge ve Teknoloji"></div>
         <div class="sponsor-name">Avcı Ar-Ge ve Teknoloji</div>
       </div>
       <div class="sponsor-card">
